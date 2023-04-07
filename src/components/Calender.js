@@ -14,6 +14,7 @@ export default function (){
   const [openPopup, setOpenPopup] = useState(false);
   const [curData, setCurData] = useState({});
   const [events, setEvents] = useState([]);
+  const [openDetails, setOpenDetails] = useState(false);
 
 
   const addEvent = (event) => {
@@ -35,65 +36,80 @@ export default function (){
   };
 
   const onSelect = async (data) => {
-    let { start, end, title, id} = data.event;
-    setCurData(data.event)
-    setOpenPopup(true)
+  let { start, end, title, id } = data.event;
+  setCurData(data.event);
+  setOpenPopup(true);
+};
+
+  const handleOpenDetails = () => {
+    setOpenDetails(true);
   };
 
-
-    return(
-        <div>
-          <FullCalendar
-              plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-              initialView="dayGridMonth"
-              selectable={true}
-              eventClick={onSelect}
-              headerToolbar={{
-                  center: 'add dayGridMonth,timeGridWeek,timeGridDay',
+  return (
+    <div>
+      <FullCalendar
+        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+        initialView="dayGridMonth"
+        selectable={true}
+        eventClick={onSelect}
+        headerToolbar={{
+          center: "add dayGridMonth,timeGridWeek,timeGridDay",
+        }}
+        customButtons={{
+          add: {
+            text: "Add",
+            click: () => {
+              console.log("new event");
+              setCurData({});
+              setOpenPopup(true);
+            },
+          },
+        }}
+        events={events}
+      />
+      <Dialog open={openPopup}>
+        <DialogTitle>
+          <Grid container spacing={2}>
+            <Grid item xs={10}>
+              <Typography variant="h4" component="span">
+                {curData.id ? "Update Event" : "Create Event"}
+              </Typography>
+            </Grid>
+            <Grid item xs={2}>
+              <Button
+                style={{ float: "right" }}
+                aria-label="Close"
+                variant="contained"
+                color="error"
+                endIcon={<CloseIcon />}
+                onClick={() => {
+                  setOpenPopup((prev) => !prev);
                 }}
-              customButtons={{
-                  add: {
-                      text: 'Add',
-                      click: () => {
-                          console.log('new event');
-                        setCurData({})
-                        setOpenPopup(true)
+              >
+                Close
+              </Button>
+            </Grid>
+          </Grid>
+        </DialogTitle>
 
-                      },
-                  },
-              }}
-              events={events}
-          />
-          <Dialog open={openPopup}>
-            <DialogTitle >
-              <Grid container spacing={2} >
-                <Grid item xs={10}>
-                  <Typography variant='h4' component='span'>
-                    {curData.id ? 'Update Event' :'Create Event'}
-                  </Typography>
-                </Grid>
-                <Grid item xs={2}>
-                  <Button
-                    style={{ float: 'right' }}
-                    aria-label="Close"
-                    variant="contained"
-                    color="error"
-                    endIcon={<CloseIcon />}
-                    // startIcon={}
-                    onClick={() => {
-                      setOpenPopup((prev) => !prev);
-                    }}>
-                    Close
-                  </Button>
-                </Grid>
-              </Grid>
-            </DialogTitle>
+        <DialogContent dividers={true}>
+          <NewActivity curData={curData} updateEvent={updateEvent} addEvent={addEvent} />
+          {/* {curData.id && (
+            <Button variant="contained" onClick={handleOpenDetails}>
+              Edit
+            </Button>
+          )} */}
+        </DialogContent>
+      </Dialog>
 
-            <DialogContent dividers={true}>
-            <NewActivity curData={curData} updateEvent={updateEvent} addEvent={addEvent} />
-            </DialogContent>
-          </Dialog>
-        </div>
-     );
-
+      <Dialog open={openDetails}>
+        <DialogTitle>
+          Event Details
+        </DialogTitle>
+        <DialogContent>
+          {/* Render event details here */}
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
 }

@@ -172,7 +172,7 @@ export default function FormModal(props) {
                 </Grid>
             </Grid>
             <Button style={{marginTop: 10}} variant="contained" color="primary" onClick={handleSubmit}>
-                Submit
+                Confirm
             </Button>
             <Snackbar open={snackBar.open} autoHideDuration={6000} onClose={() => setSnackBar({ open: false })}>
                 <Alert severity="error">{snackBar.message}</Alert>
