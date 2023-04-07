@@ -1,69 +1,98 @@
+import React, { useEffect, useState, useContext } from "react";
 import FullCalendar from '@fullcalendar/react'; // must go before plugins
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { render } from 'preact/compat';
-
-
-const events = [
-    {
-      id: 1,
-      title: 'event 1',
-      start: '2023-03-28T06:00:00',
-      end: '2023-03-28T08:00:00',
-      extendedProps: {
-        department: "BioChemistry"
-      },
-      description: "Lecture",
-      color: "green"
-    },
-    {
-      id: 1,
-      title: 'event 1',
-      start: '2023-03-28T15:00:00',
-      end: '2023-03-28T06:20:00',
-      extendedProps: {
-        department: "BioChemistry"
-      },
-      description: "Lecture",
-      color: "green"
-    },
-    { 
-      id: 3, 
-      title: 'event 3', 
-      start: '2023-03-17T00:00:00', 
-    //   end: '2023-03-17T14:00:00' ,
-      extendedProps: {
-        department: "BioChemistry"
-      },
-      description: "Lecture"
-    }
-  ];
-
-
+import { Dialog, DialogTitle, DialogContent, Grid } from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close';
+import Button from "@mui/material/Button";
+import { Divider, Typography } from "@mui/material";
+import NewActivity from "./NewActivity";
 
 
 export default function (){
+  const [openPopup, setOpenPopup] = useState(false);
+  const [curData, setCurData] = useState({});
+  const [events, setEvents] = useState([]);
+
+
+  const addEvent = (event) => {
+    const _events = JSON.parse(JSON.stringify(events))
+    _events.push({ id: _events.length, ...event })
+    setEvents(_events)
+    setOpenPopup(false)
+  };
+
+  const updateEvent = (id, event) => {
+    if (id){
+      const _events = JSON.parse(JSON.stringify(events))
+      let eventIndex = _events.findIndex(e => e.id === event.id)
+      _events.splice(eventIndex, 1, { id, ...event })
+      console.log()
+      setEvents(_events)
+      setOpenPopup(false)
+    }
+  };
+
+  const onSelect = async (data) => {
+    let { start, end, title, id} = data.event;
+    setCurData(data.event)
+    setOpenPopup(true)
+  };
+
+
     return(
         <div>
-            <FullCalendar
-                plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                initialView="dayGridMonth"
-                headerToolbar={{
-                    center: 'add dayGridMonth,timeGridWeek,timeGridDay',
-                  }}
-                customButtons={{
-                    add: {
-                        text: 'Add',
-                        click: () => {
-                            console.log('new event');
-                            console.log(events[0].extendedProps.department);
-
-                        },
-                    },
+          <FullCalendar
+              plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+              initialView="dayGridMonth"
+              selectable={true}
+              eventClick={onSelect}
+              headerToolbar={{
+                  center: 'add dayGridMonth,timeGridWeek,timeGridDay',
                 }}
-                events={events}
-            />
+              customButtons={{
+                  add: {
+                      text: 'Add',
+                      click: () => {
+                          console.log('new event');
+                        setCurData({})
+                        setOpenPopup(true)
+
+                      },
+                  },
+              }}
+              events={events}
+          />
+          <Dialog open={openPopup}>
+            <DialogTitle >
+              <Grid container spacing={2} >
+                <Grid item xs={10}>
+                  <Typography variant='h4' component='span'>
+                    {curData.id ? 'Update Event' :'Create Event'}
+                  </Typography>
+                </Grid>
+                <Grid item xs={2}>
+                  <Button
+                    style={{ float: 'right' }}
+                    aria-label="Close"
+                    variant="contained"
+                    color="error"
+                    endIcon={<CloseIcon />}
+                    // startIcon={}
+                    onClick={() => {
+                      setOpenPopup((prev) => !prev);
+                    }}>
+                    Close
+                  </Button>
+                </Grid>
+              </Grid>
+            </DialogTitle>
+
+            <DialogContent dividers={true}>
+            <NewActivity curData={curData} updateEvent={updateEvent} addEvent={addEvent} />
+            </DialogContent>
+          </Dialog>
         </div>
      );
 
