@@ -96,13 +96,15 @@ export default function FormModal(props) {
         <div style={{ padding: '20px' }}>
             <Grid container spacing={3}>
                 <Grid item xs={12}>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker
-                            label="Select Date"
-                            value={selectedDate}
-                            onChange={handleDateChange}
-                            fullWidth
-                        />
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                        label="Select Date"
+                        value={selectedDate}
+                        onChange={handleDateChange}
+                        fullWidth
+                        locale="en-AU"
+                        format="DD/MM/YYYY"
+                    />
                     </LocalizationProvider>
                     
                 </Grid>
@@ -132,11 +134,12 @@ export default function FormModal(props) {
                 </Grid>
                 <Grid item xs={12}>
                     <FormControl fullWidth>
-                        <InputLabel id="select-label">TRIAL</InputLabel>
+                    <InputLabel id="select-label" style={{ fontSize: '14px' }}>TRAIL</InputLabel>
                         <Select
-                            labelId="select-label"
+                            labelId="TRAIL"
                             value={selectedOption}
                             onChange={handleOptionChange}
+                            fullWidth
                         >
                             <MenuItem value="A">A</MenuItem>
                             <MenuItem value="B">B</MenuItem>
@@ -148,11 +151,12 @@ export default function FormModal(props) {
 
                 <Grid item xs={12}>
                     <FormControl fullWidth>
-                        <InputLabel id="select-label">ACTIVITY</InputLabel>
+                    <InputLabel id="select-label" style={{ fontSize: '14px' }}>ACTIVITY</InputLabel>
                         <Select
-                            labelId="select-label"
+                            labelId="ACTIVITY"
                             value={selectedActiveOption}
                             onChange={handleActiveChange}
+                            fullWidth
                         >
                             <MenuItem value="1">1</MenuItem>
                             <MenuItem value="2">2</MenuItem>
