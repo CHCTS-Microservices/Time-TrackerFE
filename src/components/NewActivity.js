@@ -25,7 +25,6 @@ export default function FormModal(props) {
     const [selectedActiveOption, setSelectedActiveOption] = useState('');
     const [selectedOption, setSelectedOption] = useState('');
     const [inputValue, setInputValue] = useState('');
-    
     const [snackBar, setSnackBar] = useState({
         message: "",
         open: false,
@@ -134,7 +133,7 @@ export default function FormModal(props) {
                 </Grid>
                 <Grid item xs={12}>
                     <FormControl fullWidth>
-                    <InputLabel id="select-label" style={{ fontSize: '14px' }}>TRAIL</InputLabel>
+                    <InputLabel id="select-label" style={{ fontSize: '12px' }}>TRAIL</InputLabel>
                         <Select
                             labelId="TRAIL"
                             value={selectedOption}
@@ -151,7 +150,7 @@ export default function FormModal(props) {
 
                 <Grid item xs={12}>
                     <FormControl fullWidth>
-                    <InputLabel id="select-label" style={{ fontSize: '14px' }}>ACTIVITY</InputLabel>
+                    <InputLabel id="select-label" style={{ fontSize: '12px' }}>ACTIVITY</InputLabel>
                         <Select
                             labelId="ACTIVITY"
                             value={selectedActiveOption}
