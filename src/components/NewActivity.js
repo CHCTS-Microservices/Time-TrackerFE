@@ -25,7 +25,6 @@ export default function FormModal(props) {
     const [selectedActiveOption, setSelectedActiveOption] = useState('');
     const [selectedOption, setSelectedOption] = useState('');
     const [inputValue, setInputValue] = useState('');
-    
     const [snackBar, setSnackBar] = useState({
         message: "",
         open: false,
@@ -79,8 +78,8 @@ export default function FormModal(props) {
             start: selectedTime.format('YYYY-MM-DD HH:mm'),
             end: selectedEndTime.format('YYYY-MM-DD HH:mm'),
             extendedProps: {
-                department: "BioChemistry",
-                description: inputValue
+                ...props.curData.extendedProps,
+                description: inputValue,
             },
             color: "green"
         }
@@ -89,22 +88,24 @@ export default function FormModal(props) {
         }else{
             props.addEvent(params)
         }
-       
+
     };
 
     return (
         <div style={{ padding: '20px' }}>
             <Grid container spacing={3}>
                 <Grid item xs={12}>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker
-                            label="Select Date"
-                            value={selectedDate}
-                            onChange={handleDateChange}
-                            fullWidth
-                        />
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                        label="Select Date"
+                        value={selectedDate}
+                        onChange={handleDateChange}
+                        fullWidth
+                        locale="en-AU"
+                        format="DD/MM/YYYY"
+                    />
                     </LocalizationProvider>
-                    
+
                 </Grid>
                 <Grid item xs={6}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -116,7 +117,7 @@ export default function FormModal(props) {
                             fullWidth
                         />
                     </LocalizationProvider>
-                    
+
                 </Grid>
                 <Grid item xs={6}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -132,11 +133,12 @@ export default function FormModal(props) {
                 </Grid>
                 <Grid item xs={12}>
                     <FormControl fullWidth>
-                        <InputLabel id="select-label">TRIAL</InputLabel>
+                    <InputLabel id="select-label" style={{ fontSize: '12px' }}>TRAIL</InputLabel>
                         <Select
-                            labelId="select-label"
+                            labelId="TRAIL"
                             value={selectedOption}
                             onChange={handleOptionChange}
+                            fullWidth
                         >
                             <MenuItem value="A">A</MenuItem>
                             <MenuItem value="B">B</MenuItem>
@@ -148,11 +150,12 @@ export default function FormModal(props) {
 
                 <Grid item xs={12}>
                     <FormControl fullWidth>
-                        <InputLabel id="select-label">ACTIVITY</InputLabel>
+                    <InputLabel id="select-label" style={{ fontSize: '12px' }}>ACTIVITY</InputLabel>
                         <Select
-                            labelId="select-label"
+                            labelId="ACTIVITY"
                             value={selectedActiveOption}
                             onChange={handleActiveChange}
+                            fullWidth
                         >
                             <MenuItem value="1">1</MenuItem>
                             <MenuItem value="2">2</MenuItem>
@@ -161,10 +164,10 @@ export default function FormModal(props) {
                         </Select>
                     </FormControl>
                 </Grid>
-                
+
                 <Grid item xs={12}>
                     <TextField
-                        label="COMMENT"
+                        label="Desc"
                         value={inputValue}
                         onChange={handleInputChange}
                         fullWidth
@@ -172,7 +175,7 @@ export default function FormModal(props) {
                 </Grid>
             </Grid>
             <Button style={{marginTop: 10}} variant="contained" color="primary" onClick={handleSubmit}>
-                Submit
+                Confirm
             </Button>
             <Snackbar open={snackBar.open} autoHideDuration={6000} onClose={() => setSnackBar({ open: false })}>
                 <Alert severity="error">{snackBar.message}</Alert>
