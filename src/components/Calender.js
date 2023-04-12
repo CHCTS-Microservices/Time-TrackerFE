@@ -126,7 +126,7 @@ export default function (){
         }}
         customButtons={{
           add: {
-            text: "Add",
+            text: "Create",
             click: () => {
               console.log("new event");
               setCurData({});
