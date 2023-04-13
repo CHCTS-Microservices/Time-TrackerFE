@@ -137,7 +137,7 @@ export default function FormModal(props) {
                     <FormControl fullWidth>
                     <InputLabel id="select-label" style={{ fontSize: '12px' }}>TRAIL</InputLabel>
                         <Select
-                            labelId="TRAIL"
+                            label="TRAIL"
                             value={selectedOption}
                             onChange={handleOptionChange}
                             fullWidth
@@ -154,7 +154,7 @@ export default function FormModal(props) {
                     <FormControl fullWidth>
                     <InputLabel id="select-label" style={{ fontSize: '12px' }}>ACTIVITY</InputLabel>
                         <Select
-                            labelId="ACTIVITY"
+                            label="ACTIVITY"
                             value={selectedActiveOption}
                             onChange={handleActiveChange}
                             fullWidth
