@@ -14,12 +14,13 @@ import {
 import moment from 'moment';
 
 import { DatePicker, TimePicker } from '@mui/x-date-pickers';
+import dayjs, { Dayjs } from "dayjs";
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 
 export default function FormModal(props) {
-    const [selectedDate, handleDateChange] = useState(moment());
+    const [selectedDate, handleDateChange] = useState(dayjs(new Date()));
     const [selectedTime, setSelectedTime] = useState();
     const [selectedEndTime, setSelectedEndTime] = useState();
     const [selectedActiveOption, setSelectedActiveOption] = useState('');
@@ -98,6 +99,7 @@ export default function FormModal(props) {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker
                         label="Select Date"
+
                         value={selectedDate}
                         onChange={handleDateChange}
                         fullWidth
