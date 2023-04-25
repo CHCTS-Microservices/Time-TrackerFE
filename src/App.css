@@ -25,9 +25,21 @@
 }
 
 .App-link {
-  color: #61dafb;
+  color: #fb8f61;
 }
-
+.list1{
+  color: #000;
+}
+.list2{
+  color:firebrick;
+  width: -40px;
+}
+/* #a1{
+  color: #000;
+}
+#a2{
+  color:firebrick;
+} */
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
