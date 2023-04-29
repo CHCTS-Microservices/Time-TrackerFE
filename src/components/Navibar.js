@@ -1,7 +1,7 @@
+import React from 'react';
 import { FaBars } from 'react-icons/fa';
 import { NavLink as Link } from 'react-router-dom';
 import styled from 'styled-components';
-
 
 
 export const Nav = styled.nav`
@@ -32,7 +32,7 @@ export const Bars = styled(FaBars)`
 display: none;
 color: #808080;
 @media screen and (max-width: 768px) {
-	display: block;
+	display: block;git
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -86,3 +86,33 @@ margin-left: 24px;
 	color: #808080;
 }
 `;
+
+
+const Navbar = () => {
+return (
+	<>
+	<Nav>
+		<Bars />
+
+		<NavMenu>
+		<NavLink to='/Dashboard' activeStyle>
+			Dashboard
+		</NavLink>
+		<NavLink to='/Calendar' activeStyle>
+			Calendar
+		</NavLink>
+		<NavLink to='/Report' activeStyle>
+			Report
+		</NavLink>
+		{/* Second Nav */}
+		{/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
+		</NavMenu>
+		<NavBtn>
+		<NavBtnLink to='/Calendar'>New Event</NavBtnLink>
+		</NavBtn>
+	</Nav>
+	</>
+);
+};
+
+export default Navbar;
