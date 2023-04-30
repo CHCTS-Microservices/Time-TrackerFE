@@ -21,7 +21,7 @@ return (
 		<NavLink to='/Calendar' activeStyle>
 			Calendar
 		</NavLink>
-		<NavLink to='/Report' activeStyle>
+		<NavLink to='/Statistics' activeStyle>
 			Report
 		</NavLink>
 		{/* Second Nav */}
