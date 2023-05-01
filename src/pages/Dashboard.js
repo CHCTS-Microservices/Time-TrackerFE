@@ -1,6 +1,7 @@
 import React from 'react';
-import "../App.css"
+// import "../App.css"
 import Stopwatch from '../components/Stopwatch/Stopwatch';
+import "../Styles.css"
 
 const Dashboard = () => {
     return (
@@ -8,14 +9,14 @@ const Dashboard = () => {
         <section>
         <div className="App">
         <p>
-          made by patmaz{" "}
+          {/* made by patmaz{" "}
           <a
             href="https://patmazurkiewicz.com"
             target="_blank"
             rel="noopener noreferrer"
           >
             patmazurkiewicz.com
-          </a>
+          </a> */}
         </p>
         <Stopwatch />
       </div>
