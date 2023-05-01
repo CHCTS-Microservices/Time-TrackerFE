@@ -11,8 +11,8 @@ function Statistics() {
     <div>
 
 
-<iframe  title="TT-Demo Report - Overview" width="1500" height="800" src="https://app.powerbi.com/reportEmbed?reportId=3095c7b2-7d8b-4378-a36b-667f164ff048&autoAuth=true&ctid=7fb802fd-7d9f-4a7f-b081-937a1477ae1b" frameborder="0" allowFullScreen="true"></iframe>
 
+<iframe title="TT-Demo Report" width="2000" height="1000" src="https://app.powerbi.com/reportEmbed?reportId=f1282296-3ffb-4bad-8494-d1c4dc3a9df2&autoAuth=true&ctid=7fb802fd-7d9f-4a7f-b081-937a1477ae1b" frameborder="0" allowFullScreen="true"></iframe>
 
       {/* <PowerBIEmbed
         embedConfig={{
