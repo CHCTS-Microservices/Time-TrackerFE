@@ -25,6 +25,7 @@ function Dashboard() {
         "title": e.eventName,
         "start": moment(e.startTime).format('YYYY-MM-DD HH:mm'),
         "end": moment(e.endTime).format('YYYY-MM-DD HH:mm') ,
+        "duration": e.spentTime,
         "extendedProps": {
           "description": e.eventDesc,
           "activityId": e.activityId,

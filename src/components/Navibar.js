@@ -108,7 +108,7 @@ return (
 		{/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
 		</NavMenu>
 		<NavBtn>
-		<NavBtnLink to='/Calendar'>New Event</NavBtnLink>
+		<NavBtnLink to='/Dashboard'>New Event</NavBtnLink>
 		</NavBtn>
 	</Nav>
 	</>

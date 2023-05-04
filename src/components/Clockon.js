@@ -21,11 +21,11 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 
-export function Clockon(props) 
+export default function Clockon(props) 
     {
-
+    
     var id = props.text
-
+    console.log(props.curData)
     const [selectedDate, handleDateChange] = useState(dayjs(new Date()));
     const [selectedTime, setSelectedTime] = useState();
     const [selectedEndTime, setSelectedEndTime] = useState();
@@ -36,9 +36,34 @@ export function Clockon(props)
         message: "",
         open: false,
     });
+    const [otime, setoTime] = useState(props.curData.duration);
+    
+    useEffect(() => {
+        if(props.curData){
+            if(id!=0){
+            const { title, start, end, extendedProps } = props.curData
+            let [option1, option2 ] = title.split(' ')
+            let startTime = moment(start)
+            console.log("option1 is"+option1)
+            handleDateChange(startTime)
+            handleTimeChange(startTime)
+            handleEndTimeChange(moment(end))
+            setSelectedOption(option1)
+            setSelectedActiveOption(option2)
+            setInputValue(extendedProps.description)
+            handleDuration(props.curData.duration)
+            console.log(props.curData.duration)
+            console.log("setotime "+otime)
+            }else{
+                var inputdata={}
+            }
+    }}, [props.curData]);
 
 
-
+ 
+    const handleDuration = (val) => {
+        setoTime(val);
+    };
 
     const handleTimeChange = (val) => {
         setSelectedTime(val);
@@ -64,19 +89,20 @@ export function Clockon(props)
         if (!selectedTime) return setSnackBar({ message: `Start Time is required!`, open: true})
         if (!selectedEndTime) return setSnackBar({ message: `End Time is required!`, open: true })
         if (!inputValue) return setSnackBar({ message: `Description is required!`, open: true })
-
+        console.log(otime)
         let params = {
-            title: `${selectedOption || ''} ${selectedActiveOption || ''} ${inputValue}`,
+            title: `${selectedOption || ''} ${selectedActiveOption || ''}`,
             // start: new Date(`${moment(selectedDate).format('YYYY-MM-DD')} ${moment(selectedTime).format('hh:mm:a') }`),
             start: selectedTime.format('YYYY-MM-DD HH:mm'),
             end: selectedEndTime.format('YYYY-MM-DD HH:mm'),
+            spenttime: otime,
             extendedProps: {
                 ...props.curData.extendedProps,
                 description: inputValue,
             },
             color: "green"
         }
-        if (props.curData.id){
+        if (id!=0){
             props.updateEvent(props.curData.id, params)
         }else{
             props.addEvent(params)
@@ -87,7 +113,6 @@ export function Clockon(props)
   return (
 
     <div className="Clockon">
-      <h1>The Activity id for this component is {id}</h1>
       
       <div style={{ padding: '20px' }}>
             <Grid container spacing={3}>
@@ -108,7 +133,7 @@ export function Clockon(props)
 
                 
                 <Grid item xs={12}>
-                <Stopwatch/>
+                <Stopwatch time={otime} settime={setoTime}/>
 
                 </Grid>
 
@@ -121,10 +146,11 @@ export function Clockon(props)
                             onChange={handleOptionChange}
                             fullWidth
                         >
-                            <MenuItem value="A">A</MenuItem>
-                            <MenuItem value="B">B</MenuItem>
-                            <MenuItem value="C">C</MenuItem>
-                            <MenuItem value="D">D</MenuItem>
+                            <MenuItem value="TrialA">Trial A</MenuItem>
+                            <MenuItem value="TrialB">Trial B</MenuItem>
+                            <MenuItem value="TrialC">Trial C</MenuItem>
+                            <MenuItem value="TrialD">Trial D</MenuItem>
+                            <MenuItem></MenuItem>
                         </Select>
                     </FormControl>
                 </Grid>
@@ -138,10 +164,11 @@ export function Clockon(props)
                             onChange={handleActiveChange}
                             fullWidth
                         >
-                            <MenuItem value="1">1</MenuItem>
-                            <MenuItem value="2">2</MenuItem>
-                            <MenuItem value="3">3</MenuItem>
-                            <MenuItem value="4">4</MenuItem>
+                            <MenuItem key="1" value="Activity1">Activity 1</MenuItem>
+                            <MenuItem key="2" value="Activity2">Activity 2</MenuItem>
+                            <MenuItem key="3" value="Activity3">Activity 3</MenuItem>
+                            <MenuItem key="4" value="Activity4">Activity 4</MenuItem>
+                            <MenuItem></MenuItem>
                         </Select>
                     </FormControl>
                 </Grid>
@@ -166,7 +193,3 @@ export function Clockon(props)
   );
 }
 
-const rootElement = document.getElementById("root");
-ReactDOM.render(<Clockon />, rootElement);
-
-export default Clockon;
