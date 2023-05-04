@@ -77,8 +77,8 @@ export default function FormModal(props) {
         let params = {
             title: `${selectedOption || ''} ${selectedActiveOption || ''}`,
             // start: new Date(`${moment(selectedDate).format('YYYY-MM-DD')} ${moment(selectedTime).format('hh:mm:a') }`),
-            start: selectedTime.format('YYYY-MM-DD HH:mm'),
-            end: selectedEndTime.format('YYYY-MM-DD HH:mm'),
+            start: `${selectedDate.format('YYYY-MM-DD')} ${selectedTime.format('HH:mm')}`,
+            end: `${selectedDate.format('YYYY-MM-DD')} ${selectedEndTime.format('HH:mm') }`,
             extendedProps: {
                 ...props.curData.extendedProps,
                 description: inputValue,
