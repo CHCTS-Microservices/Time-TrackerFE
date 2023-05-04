@@ -50,6 +50,7 @@ export default function FormModal(props) {
    
 
     const handleTimeChange = (val) => {
+        console.log('val', val)
         setSelectedTime(val);
     };
 
@@ -75,13 +76,14 @@ export default function FormModal(props) {
         if (!inputValue) return setSnackBar({ message: `Description is required!`, open: true })
 
         let params = {
+
             title: `${selectedOption || ''} ${selectedActiveOption || ''}`,
-            // start: new Date(`${moment(selectedDate).format('YYYY-MM-DD')} ${moment(selectedTime).format('hh:mm:a') }`),
             start: `${selectedDate.format('YYYY-MM-DD')} ${selectedTime.format('HH:mm')}`,
             end: `${selectedDate.format('YYYY-MM-DD')} ${selectedEndTime.format('HH:mm') }`,
             extendedProps: {
                 ...props.curData.extendedProps,
                 description: inputValue,
+                time: `${selectedDate.format('YYYY-MM-DD')}`,
             },
             color: "green"
         }
