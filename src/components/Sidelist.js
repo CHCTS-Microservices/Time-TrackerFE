@@ -16,12 +16,9 @@ import DraftsIcon from '@mui/icons-material/Drafts';
 
 function Sidelist(props) {
 
-console.log("Type pf")
-
-console.log(typeof props)
 
 var {userDetails} = props;
-console.log(typeof userDetails)
+
 const [emps,setEmps]=useState([
     {name:"Activity 1",trial:"A"},
     {name:"Activity 2",trial:"B"},
@@ -45,9 +42,9 @@ const handleListItemClick = (event, index) => {
 
 return ( 
 <div className="float-container">
-      <button onClick={() => {
-          props.passChildData(9);
-        }}>back</button>
+      <div>
+        {}
+      </div>
       <div className="float-child1">
           <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
       <nav aria-label="main mailbox folders">
@@ -58,7 +55,7 @@ return (
             return (
                 <ListItem disablePadding>
                 <ListItemButton selected={selectedIndex === index} onClick={(event) => {handleListItemClick(event, index);addComponent(item.id)}}>
-                <ListItemText primary= {item.name}/>
+                <ListItemText primary= {item.title}/>
                 </ListItemButton>
                 </ListItem>
             )

@@ -1,17 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import Sidelist from '../components/Sidelist';
-import Clockon from '../components/Clockon';
 import "../App.css"
+import moment from "moment";
 
 
 
 function Dashboard() {
 
-  var myarray=[
-    {id:"1",name:'Activity 4',trial:"A"},
-    {id:"2",name:"Activity 2",trial:"B"},
-    {id:"3",name:"Activity 3",trial:"C"},
-];
+  const [events, setEvents] = useState([]);
+  useEffect(() => {
+    getEvents()
+  }, []);
+  const getEvents = ()=>{
+    fetch('/event/info', {
+      method: 'POST',
+      body: JSON.stringify({ userId: 66}),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.json())
+    .then(res=>{
+      let datas = res.events.map(e => ({
+        "id": e.id,
+        "title": e.eventName,
+        "start": moment(e.startTime).format('YYYY-MM-DD HH:mm'),
+        "end": moment(e.endTime).format('YYYY-MM-DD HH:mm') ,
+        "extendedProps": {
+          "description": e.eventDesc,
+          "activityId": e.activityId,
+          "trailId": e.trailId,
+          "_id": e._id
+        },
+        "color": "green"
+      }))
+      console.log('datas', datas)
+      setEvents(datas)
+    })
+
+  }
+
+  var myarray=events;
+  console.log(myarray);
 var a=0;
 const [childData, setChildData] = useState("");
 
@@ -22,7 +51,7 @@ return (
 
  
  
-        <Sidelist passChildData={setChildData} userDetails={myarray}/>
+        <Sidelist passChildData={setChildData} passEventdata={setEvents} userDetails={myarray}/>
      
     {/* <Sidelist/> */}
   </div>

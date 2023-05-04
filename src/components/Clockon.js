@@ -12,7 +12,7 @@ import {
   Snackbar,
   Alert
 } from '@mui/material';
-import Stopwatch from "./Clock/Stopwatch";
+import Stopwatch from "./Stopwatch";
 import "./Clock/styles.css";
 import moment from 'moment';
 import { DatePicker, TimePicker } from '@mui/x-date-pickers';
@@ -92,10 +92,6 @@ export function Clockon(props)
     <div className="Clockon">
       <h1>The Activity id for this component is {id}</h1>
       
-      
-     
-
-      <Stopwatch />
       <div style={{ padding: '20px' }}>
             <Grid container spacing={3}>
                 <Grid item xs={12}>
@@ -110,6 +106,12 @@ export function Clockon(props)
                         format="DD/MM/YYYY"
                     />
                     </LocalizationProvider>
+
+                </Grid>
+
+                
+                <Grid item xs={12}>
+                <Stopwatch/>
 
                 </Grid>
 
