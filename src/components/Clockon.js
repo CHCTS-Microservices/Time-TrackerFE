@@ -24,9 +24,6 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 export function Clockon(props) 
     {
 
-    console.log("111")
-    
-    console.log(typeof props.array)
     var id = props.text
 
     const [selectedDate, handleDateChange] = useState(dayjs(new Date()));

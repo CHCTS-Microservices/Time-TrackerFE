@@ -91,10 +91,11 @@ export default function FormModal(props) {
         }
 
     };
+    const options= [0,1,2,3,4, 5,6,7,8,9]
 
     return (
         <div style={{ padding: '20px' }}>
-            <Grid container spacing={3}>
+            <Grid container spacing={5}>
                 <Grid item xs={12}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker
@@ -159,10 +160,17 @@ export default function FormModal(props) {
                             onChange={handleActiveChange}
                             fullWidth
                         >
-                            <MenuItem value="1">1</MenuItem>
-                            <MenuItem value="2">2</MenuItem>
-                            <MenuItem value="3">3</MenuItem>
-                            <MenuItem value="4">4</MenuItem>
+                  
+                            {/* <MenuItem key="1" value="1">1</MenuItem>
+                            <MenuItem key="2" value="2">2</MenuItem>
+                            <MenuItem key="3" value="3">3</MenuItem>
+                            <MenuItem key="4" value="4">4</MenuItem>
+                            <MenuItem>6</MenuItem> */}
+                                    {options.map((item, index) => (
+                                <MenuItem key={index} value={item}>
+            {item}
+          </MenuItem>
+        ))}
                         </Select>
                     </FormControl>
                 </Grid>

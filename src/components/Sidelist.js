@@ -19,11 +19,7 @@ function Sidelist(props) {
 
 var {userDetails} = props;
 
-const [emps,setEmps]=useState([
-    {name:"Activity 1",trial:"A"},
-    {name:"Activity 2",trial:"B"},
-    {name:"Activity 3",trial:"C"},
-])
+
 
 const [c,setc]=useState(["1"])
 
