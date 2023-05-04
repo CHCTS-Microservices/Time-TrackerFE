@@ -3,10 +3,7 @@ import Calender from '../components/Calender';
 
 const Calendar = () => {
 return (
-	<div
-	style={{
-	}}
-	>
+	<div>
     <Calender/>
 	</div>
 );

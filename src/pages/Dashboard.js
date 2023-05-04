@@ -1,142 +1,68 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState, useEffect} from 'react';
+import Sidelist from '../components/Sidelist';
 import "../App.css"
+import moment from "moment";
 
-import Box from '@mui/material/Box';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Divider from '@mui/material/Divider';
-import InboxIcon from '@mui/icons-material/Inbox';
-import DraftsIcon from '@mui/icons-material/Drafts';
+
 
 function Dashboard() {
 
+  const [events, setEvents] = useState([]);
+  useEffect(() => {
+    getEvents()
+  }, []);
+  const getEvents = ()=>{
+    fetch('/event/info', {
+      method: 'POST',
+      body: JSON.stringify({ userId: 66}),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.json())
+    .then(res=>{
+      let datas = res.events.map(e => ({
+        "id": e.id,
+        "title": e.eventName,
+        "start": moment(e.startTime).format('YYYY-MM-DD HH:mm'),
+        "end": moment(e.endTime).format('YYYY-MM-DD HH:mm') ,
+        "duration": e.spentTime,
+        "extendedProps": {
+          "description": e.eventDesc,
+          "activityId": e.activityId,
+          "trailId": e.trailId,
+          "_id": e._id
+        },
+        "color": "green"
+      }))
+      console.log('datas', datas)
+      setEvents(datas)
+    })
 
-/* const  Dashboard = () => {
-  return (
-/*     <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-      <nav aria-label="main mailbox folders">
-        <List>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <InboxIcon />
-              </ListItemIcon>
-              <ListItemText primary= "Inbox"/>
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <DraftsIcon />
-              </ListItemIcon>
-              <ListItemText primary="Drafts" />
-            </ListItemButton>
-          </ListItem>
-        </List>
-      </nav>
-      <Divider />
-      <nav aria-label="secondary mailbox folders">
-        <List>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemText primary="Trash" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton component="a" href="#simple-list">
-              <ListItemText primary="Spam" />
-            </ListItemButton>
-          </ListItem>
-        </List>
-      </nav>
-    </Box> 
-  );
-}; */
-const [emps,setEmps]=useState([
-    {name:"Acti1",experience:"10+ Years"},
-    {name:"Mano",experience:"2 Years"},
-    {name:"Tom",experience:"5+ Years"},
-])
+  }
 
-const addRow=()=>{
-    let newEmp={name:"Random User1",experience:"6 Years"}
-    setEmps([...emps,newEmp])
-}
-
-const updateRow=()=>{
-    let index=0
-    let newEmp=emps[index]
-    newEmp["name"]="Modfied User";
-    emps[index]=newEmp
-    setEmps([...emps])
-}
-
-const deleteRow = () => {
-    //let name="Mano"
-    //setEmps(emps.filter(emp => emp.name !== name))
-    let copy_emp=[...emps]
-    copy_emp.splice(0,1)
-    setEmps(copy_emp)
-}
-
+  var myarray=events;
+  console.log(myarray);
+var a=0;
+const [childData, setChildData] = useState("");
 
 return ( 
-<div className = "App" >
-   {emps.map( (emp,index)=>
-   (
-      <div key={index}>
-          <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-      <nav aria-label="main mailbox folders">
-        <List>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <InboxIcon />
-              </ListItemIcon>
-              <ListItemText primary= {emp.name}/>
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <DraftsIcon />
-              </ListItemIcon>
-              <ListItemText primary="Drafts" />
-            </ListItemButton>
-          </ListItem>
-        </List>
-      </nav>
-      <Divider />
-      <nav aria-label="secondary mailbox folders">
-        <List>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemText primary="Trash" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton component="a" href="#simple-list">
-              <ListItemText primary="Spam" />
-            </ListItemButton>
-          </ListItem>
-        </List>
-      </nav>
-    </Box> 
-          <h3>{emp.name}</h3>
-          <p>{emp.experience}</p>
-      </div>
-   )
-   )}
-   <button onClick={addRow}>Add</button>
-   <button onClick={updateRow}>Update</button>
-   <button onClick={deleteRow}>Delete</button>
+ <div>
+ 
+  <div>
 
-
+ 
+ 
+        <Sidelist passChildData={setChildData} passEventdata={setEvents} userDetails={myarray}/>
+     
+    {/* <Sidelist/> */}
+  </div>
+  
+  <div>
+    
+  </div>
+  
  </div>
+
 );
 }
 export default Dashboard;

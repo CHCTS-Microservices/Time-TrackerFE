@@ -1,25 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React,{ useState, useEffect } from "react";
+import ReactDOM from "react-dom";
 import {
-    Modal,
-    Button,
-    TextField,
-    FormControl,
-    InputLabel,
-    Select,
-    MenuItem,
-    Grid,
-    Snackbar,
-    Alert
+  Modal,
+  Button,
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Grid,
+  Snackbar,
+  Alert
 } from '@mui/material';
+import Stopwatch from "./Stopwatch";
+import "./Clock/styles.css";
 import moment from 'moment';
-
 import { DatePicker, TimePicker } from '@mui/x-date-pickers';
 import dayjs, { Dayjs } from "dayjs";
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 
-export default function FormModal(props) {
+export default function Clockon(props) 
+    {
+    
+    var id = props.text
+    console.log(props.curData)
     const [selectedDate, handleDateChange] = useState(dayjs(new Date()));
     const [selectedTime, setSelectedTime] = useState();
     const [selectedEndTime, setSelectedEndTime] = useState();
@@ -30,27 +36,38 @@ export default function FormModal(props) {
         message: "",
         open: false,
     });
-
-
+    const [otime, setoTime] = useState(0);
+    const [startTime,setStarttime]=useState();
+    const [endTime,endStarttime]=useState();
+    
     useEffect(() => {
-      if(props.curData.id){
-          const { title, start, end, extendedProps } = props.curData
-        let [option1, option2 ] = title.split(' ')
-        let startTime = moment(start)
-        console.log("option1 is"+option1)
-        handleDateChange(startTime)
-        handleTimeChange(startTime)
-        handleEndTimeChange(moment(end))
-        setSelectedOption(option1)
-        setSelectedActiveOption(option2)
-        setInputValue(extendedProps.description)
-      }
-    }, [props.curData]);
+        if(props.curData){
+            if(id!=0){
+            const { title, start, end, extendedProps } = props.curData
+            let [option1, option2 ] = title.split(' ')
+            let startTime = moment(start)
+            console.log("option1 is"+option1)
+            handleDateChange(startTime)
+            handleTimeChange(startTime)
+            handleEndTimeChange(moment(end))
+            setSelectedOption(option1)
+            setSelectedActiveOption(option2)
+            setInputValue(extendedProps.description)
+            handleDuration(props.curData.duration)
+            console.log(props.curData.duration)
+            console.log("setotime "+otime)
+            }else{
+                var inputdata={}
+            }
+    }}, [props.curData]);
 
-   
+
+ 
+    const handleDuration = (val) => {
+        setoTime(val);
+    };
 
     const handleTimeChange = (val) => {
-        console.log('val', val)
         setSelectedTime(val);
     };
 
@@ -71,34 +88,34 @@ export default function FormModal(props) {
     };
 
     const handleSubmit = () => {
-        if (!selectedTime) return setSnackBar({ message: `Start Time is required!`, open: true})
-        if (!selectedEndTime) return setSnackBar({ message: `End Time is required!`, open: true })
+       
         if (!inputValue) return setSnackBar({ message: `Description is required!`, open: true })
-
+        console.log(otime)
         let params = {
-
             title: `${selectedOption || ''} ${selectedActiveOption || ''}`,
-            start: `${selectedDate.format('YYYY-MM-DD')} ${selectedTime.format('HH:mm')}`,
-            end: `${selectedDate.format('YYYY-MM-DD')} ${selectedEndTime.format('HH:mm') }`,
+            // start: new Date(`${moment(selectedDate).format('YYYY-MM-DD')} ${moment(selectedTime).format('hh:mm:a') }`),
+            start: startTime,
+            end: endTime,
+            spenttime: otime,
             extendedProps: {
-                ...props.curData.extendedProps,
                 description: inputValue,
-                time: `${selectedDate.format('YYYY-MM-DD')}`,
             },
             color: "green"
         }
-        if (props.curData.id){
+        if (id!=0){
             props.updateEvent(props.curData.id, params)
         }else{
             props.addEvent(params)
         }
 
     };
-    
 
-    return (
-        <div style={{ padding: '20px' }}>
-            <Grid container spacing={5}>
+  return (
+
+    <div className="Clockon">
+      
+      <div style={{ padding: '20px' }}>
+            <Grid container spacing={3}>
                 <Grid item xs={12}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker
@@ -113,30 +130,13 @@ export default function FormModal(props) {
                     </LocalizationProvider>
 
                 </Grid>
-                <Grid item xs={6}>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <TimePicker
-                            label="Start Time"
-                            key={JSON.stringify(inputValue)}
-                            value={selectedTime}
-                            onChange={handleTimeChange}
-                            fullWidth
-                        />
-                    </LocalizationProvider>
+
+                
+                <Grid item xs={12}>
+                <Stopwatch time={otime} setstarttime={setStarttime} settime={setoTime}/>
 
                 </Grid>
-                <Grid item xs={6}>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <TimePicker
-                            label="End Time"
-                            key={JSON.stringify(inputValue)}
-                            value={selectedEndTime}
-                            onChange={handleEndTimeChange}
-                            fullWidth
-                        />
-                    </LocalizationProvider>
 
-                </Grid>
                 <Grid item xs={12}>
                     <FormControl fullWidth>
                     <InputLabel id="select-label" style={{ fontSize: '12px' }}>TRAIL</InputLabel>
@@ -164,13 +164,11 @@ export default function FormModal(props) {
                             onChange={handleActiveChange}
                             fullWidth
                         >
-                  
                             <MenuItem key="1" value="Activity1">Activity 1</MenuItem>
                             <MenuItem key="2" value="Activity2">Activity 2</MenuItem>
                             <MenuItem key="3" value="Activity3">Activity 3</MenuItem>
                             <MenuItem key="4" value="Activity4">Activity 4</MenuItem>
                             <MenuItem></MenuItem>
-                                    
                         </Select>
                     </FormControl>
                 </Grid>
@@ -190,6 +188,8 @@ export default function FormModal(props) {
             <Snackbar open={snackBar.open} autoHideDuration={6000} onClose={() => setSnackBar({ open: false })}>
                 <Alert severity="error">{snackBar.message}</Alert>
             </Snackbar>
-        </div>)
+        </div>
+    </div>
+  );
 }
 
