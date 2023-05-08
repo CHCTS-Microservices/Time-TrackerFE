@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import NaviBar from './components/NaviBar';
+import NaviBar from './components/Navibar';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 //import Calender from "./components/Calender";
 //import Home from './pages';
