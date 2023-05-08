@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 //import Home from './pages';
 import Calendar from './pages/Calender';
 import Dashboard from './pages/Dashboard';
-import Report from './pages/Report';
+import Statistics from './pages/Statistics';
 // import FullCalendar from '@fullcalendar/react' // must go before plugins
 // import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
 
@@ -32,7 +32,7 @@ function App() {
        <Switch>
         <Route path='/Dashboard' exact component={Dashboard} />
         <Route path='/Calendar' component={Calendar} />
-        <Route path='/Report' component={Report} />
+        <Route path='/Statistics' component={Statistics} />
        </Switch>
       </Router>
  
