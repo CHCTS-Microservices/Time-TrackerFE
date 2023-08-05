@@ -10,6 +10,8 @@ import Statistics from './pages/Statistics';
 // import FullCalendar from '@fullcalendar/react' // must go before plugins
 // import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
 
+// added comment
+
 function App() {
   return (
     
